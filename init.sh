@@ -1,8 +1,7 @@
 #!/bin/bash
 
 DRUPAL_BRANCH=8.9.x
-
-git clone --depth 1 --branch $DRUPAL_BRANCH https://git.drupalcode.org/project/drupal.git web
+[ ! -d web ] && git clone --depth 1 --branch $DRUPAL_BRANCH https://git.drupalcode.org/project/drupal.git web
 lando start
 
 lando composer install
