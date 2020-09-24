@@ -25,3 +25,5 @@ services:
     overrides:
       environment:
         SIMPLETEST_DB: "mysql://drupal8:drupal8@database/drupal8"
+        # In-memory SQLite is faster; for D8, you may need this patch: https://www.drupal.org/files/issues/2020-05-20/sqlite-support-in-memory-database-2983452-59-8.9.x.patch
+        #SIMPLETEST_DB: "sqlite://localhost/:memory:"
