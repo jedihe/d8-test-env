@@ -2,6 +2,7 @@ name: d8-test-env
 recipe: drupal8
 config:
   webroot: web
+  xdebug: false
 tooling:
   # Point composer to the right docroot.
   composer:
@@ -19,6 +20,18 @@ tooling:
     service: appserver
     description: Runs phpunit
     cmd: /app/web/vendor/bin/phpunit -c /app/web/core/
+    # TODO: find a way to auto-run this on app start, including properly resolving $LANDO_HOST_IP:
+    # export XDEBUG_CONFIG="remote_enable=1 remote_host=$LANDO_HOST_IP remote_connect_back=1 idekey=xdebug"
+  xdebug-on:
+    service: appserver
+    description: Enable xdebug for apache.
+    cmd: docker-php-ext-enable xdebug && /etc/init.d/apache2 reload
+    user: root
+  xdebug-off:
+    service: appserver
+    description: Disable xdebug for apache.
+    cmd: rm /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini && /etc/init.d/apache2 reload
+    user: root
 services:
   appserver:
     type: php
